@@ -11,7 +11,7 @@ bcrypt = Bcrypt(app)
 def new_player():
     if 'user_id' not in session:
         return redirect('/')
-    return render_template('players_new.html')
+    return render_template('create_player.html')
 
 
 @app.route('/create', methods=["POST"])
@@ -30,10 +30,10 @@ def new_players():
         "playerapg" : request.form["playerapg"],
         "playerspg": request.form["playerspg"],
         "playerbpg" : request.form["playerbpg"],
-        'user_id': session['user_id']
-        }
+        'users_id': session['user_id']
+    }
     
-    player_id = Player.create_a_player(data)
+    Player.create_a_player(data)
     
     return redirect('/dash')
 
@@ -64,7 +64,7 @@ def show_me_da_playerss(player_id):
     return render_template('view_player.html', current_user = User.get_by_id(data), current_player=current_player)
 
 @app.route("/view_player/<int:player_id>")
-def edit(player_id):
+def edit_player(player_id):
     data = {
         'id': player_id
     }

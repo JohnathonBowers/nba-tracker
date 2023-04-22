@@ -14,14 +14,14 @@
     <div class="container">
 
         <div class="">
-            <h1 class="">Hi, {{user.first_name}}!</h1>
+            <h1 class="">Hi, {{current_user.firstname}}!</h1>
             <div>
                 <input type="text" placeholder="Search for a player"><button>Search</button>
                 <a href="/logout">Logout</a>
             </div>
         </div>
 
-        <h2 class="">Around the NBA, find and add all of your favorite players, and follow them!</h2>
+        <!-- <h2 class="">Around the NBA, find and add all of your favorite players, and follow them!</h2>
         <div class="">
             <table class="">
                 <thead class="">
@@ -37,7 +37,7 @@
                     <tr>
                         <td>{{player.playername}}</td>
                         <td>{{player.playerteam}}</td>
-                        <td>{{}}</td>
+                        <td></td>
                         <td>
                             <a href="/view_player/{{player.id}}">view</a>
                             {% if player.user.id == user.id: %}
@@ -65,8 +65,8 @@
                     </tr>
                     {% endfor %}
             </table>
-        </div>
-        <button><a href="/create_link"></a>Add a player to the database!</button>
+        </div> -->
+        <a href="/create_link"><button>Add a player to the database!</button></a>
     </div>
 </body>
 </html>
