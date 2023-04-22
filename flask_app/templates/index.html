@@ -4,9 +4,79 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <link rel="stylesheet" href=>
+    <title>The Stat Sheet</title>
 </head>
 <body>
-    <h1>Testing</h1>
+    <div class="container">
+        <h1 class="">The Stat Sheet</h1>
+        <h2>Registration</h2>
+        <div class="container">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="error">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+
+            {% endwith %}
+        </div>
+        <div class="flex-container">
+            <div>
+                <form action="/register" method="post">
+
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" name="first_name" class="form-control" id="first_name"
+                            placeholder="first name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" name="last_name" class="form-control" id="last_name" placeholder="last name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" name="password" id="password_confirmation"
+                            placeholder="Create a password">
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmation">Confirm Password:</label>
+                        <input type="password" class="form-control" name="password_confirmation"
+                            id="password_confirmation" placeholder="Confirm password">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn-primary" value="Register">
+                    </div>
+                </form>
+            </div>
+            <div>
+                <h2>Login</h2>
+                <form action="/login" method="post">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" name="password" id="password_confirmation"
+                            placeholder="Create a password">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" class="btn-primary" value="Login">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
