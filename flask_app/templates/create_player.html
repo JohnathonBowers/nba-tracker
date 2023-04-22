@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="">
+
+    <title>New Player!</title>
+</head>
+<body>
+    <div>
+        <div class="">
+            <div class="">
+                <a href="/dash">Home</a>
+                <a href="/logout">Logout</a>
+            </div>
+            <h1 class="">Add a Player</h1>
+        </div>
+        
+        <div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="">{{message}}</p> 
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <form action="/create" method="post" 
+            class="">
+            <div class="">
+                <div class="">
+                    <label for="playername" class=""><strong>Player:  </strong></label>
+                    <input type="text" name="playername" class="" id="playername">
+                </div>
+                <div class="">
+                    <label for="playerteam" class=""><strong>Team:  </strong></label>
+                    <select name="playerteam">
+                        <option>Atlanta Hawks</option>
+                        <option>Boston Celtics</option>
+                        <option>Brooklyn Nets</option>
+                        <option>Charlotte Hornets</option>
+                        <option>Chicago Bulls</option>
+                        <option>Cleveland Cavaliers</option>
+                        <option>Dallas Mavericks</option>
+                        <option>Denver Nuggets</option>
+                        <option>Detroit Pistons</option>
+                        <option>Golden State Warriors</option>
+                        <option>Houston Rockets</option>
+                        <option>Indiana Pacers</option>
+                        <option>Los Angeles Clippers</option>
+                        <option>Los Angeles Lakers</option>
+                        <option>Memphis Grizzlies</option>
+                        <option>Miami Heat</option>
+                        <option>Milwaukee Bucks</option>
+                        <option>Minnesota Timberwolves</option>
+                        <option>New Orleans Pelicans</option>
+                        <option>New York Knicks</option>
+                        <option>Oklahoma City Thunder</option>
+                        <option>Orlando Magic</option>
+                        <option>Philadelphia 76ers</option>
+                        <option>Phoenix Suns</option>
+                        <option>Portland Trail Blazers</option>
+                        <option>Sacramento Kings</option>
+                        <option>San Antonio Spurs</option>
+                        <option>Toronto Raptors</option>
+                        <option>Utah Jazz</option>
+                        <option>Washington Wizards</option>
+                    </select>
+                </div>
+                <div class="">
+                    <label for="playerposition" class=""><strong>Position:  </strong></label>
+                    <select name="playerposition">
+                        <option>PG</option>
+                        <option>SG</option>
+                        <option>SF</option>
+                        <option>PF</option>
+                        <option>C</option>
+                    </select>
+                </div>
+                <div class="">
+                    <label for="playerppg" class=""><strong>PPG:  </strong></label>
+                    <input type="number" name="playerppg" class="" id="playerppg">
+                </div>
+                <div class="">
+                    <label for="playerrpg" class=""><strong>RPG:  </strong></label>
+                    <input type="number" name="playerrpg" class="" id="playerrpg">
+                </div>
+                <div class="">
+                    <label for="playerapg" class=""><strong>APG:  </strong></label>
+                    <input type="number" name="playerapg" class="" id="playerapg">
+                </div>
+                <div class="">
+                    <label for="playerspg" class=""><strong>SPG:  </strong></label>
+                    <input type="number" name="playerspg" class="" id="playerspg">
+                </div>
+                <div class="">
+                    <label for="playerbpg" class=""><strong>BPG:  </strong></label>
+                    <input type="number" name="playerbpg" class="" id="playerbpg">
+                </div>
+                <input type="hidden" name="user_id" value="{{session['user_id']}}">
+                <div class="">
+                    <input type="submit" class="" value="Add your NBA player">
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+            
