@@ -19,15 +19,13 @@ class Player:
         self.playerapg= data['playerapg']
         self.playerspg = data['playerspg']
         self.playerbpg = data['playerbpg']
-        self.maker_id = data['user_id']
-        self.maker = None
+        self.users_id = data['users_id']
 
     @classmethod
     def create_a_player(cls,data):
-        query = "INSERT INTO players (playername,playerteam,playerposition,playerppg,playerrpg,playerapg,playerspg,playerbpg, user_id) VALUES (%(playername)s , %(playerteam)s,%(playerposition)s , %(playerppg)s,%(playerrpg)s , %(playerapg)s,%(playerspg)s , %(playerbpg)s, %(user_id)s);"
-        results = connectToMySQL('users_and_players').query_db( query, data )
-        print(results)
-        return results
+        query = "INSERT INTO players (playername,playerteam,playerposition,playerppg,playerrpg,playerapg,playerspg,playerbpg, users_id) VALUES (%(playername)s , %(playerteam)s, %(playerposition)s , %(playerppg)s, %(playerrpg)s , %(playerapg)s, %(playerspg)s , %(playerbpg)s, %(users_id)s );"
+        return connectToMySQL('users_and_players').query_db( query, data )
+
 
     @staticmethod
     def validate_player(player):
@@ -41,25 +39,25 @@ class Player:
         if len(player['playerposition']) < 2:
             flash(" Player Position must be at least 2 characters.")
             is_valid = False
-        if player['playerppg'] < 0:
+        if len(player['playerppg']) < 0:
             flash("PPG must be at least 0.")
             is_valid = False
-        if player['playerrpg'] < 0:
+        if len(player['playerrpg']) < 0:
             flash("RPG must be at least 0.")
             is_valid = False
-        if player['playerapg'] < 0:
+        if len(player['playerapg']) < 0:
             flash("APG must be at least 0.")
             is_valid = False
-        if player['playerspg'] < 0:
+        if len(player['playerspg']) < 0:
             flash("SPG must be at least 0.")
             is_valid = False
-        if player['playerbpg'] < 0:
+        if len(player['playerbpg']) < 0:
             flash("BPG must be at least 0.")
             is_valid = False
         return is_valid
     @classmethod
     def get_all_with_maker(cls):
-        query = "SELECT * from players JOIN users ON users.id = players.user_id;"
+        query = "SELECT * from players JOIN users ON users.id = players.users_id;"
         results = connectToMySQL('users_and_players').query_db( query)
         all_players = []
         for row in results:

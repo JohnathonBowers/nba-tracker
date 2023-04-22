@@ -18,9 +18,9 @@ def register():
     pw_hash = bcrypt.generate_password_hash(request.form['password'])
     print(pw_hash)
     data = {
-        "id" : request.form["id"],
-        "first_name": request.form["first_name"],
-        "last_name" : request.form["last_name"],
+        # "id" : request.form["id"],
+        "firstname": request.form["firstname"],
+        "lastname" : request.form["lastname"],
         "email" : request.form["email"],
         "password" : pw_hash
         }
@@ -43,6 +43,15 @@ def login():
         return redirect('/')
     session['user_id'] = user_in_db.id
     return redirect("/dash")
+
+# @app.route('/dash')
+# def dashboard():
+#     data = {
+#         'id': session['user_id']
+#     }
+#     user = User.get_by_id(data)
+#     return render_template('dash.html', user=user, )
+
 
 @app.route("/users/account/<int:user_id>")
 def edit(user_id):
