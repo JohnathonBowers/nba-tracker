@@ -14,8 +14,39 @@ def dashboard():
     data = {
         'user_id': session.get('user_id')
     }
-    return render_template ('dashboard.html', user = user.User.get_by_user_id(data))
-    # Add "player = player.Player.get_all_players_with_creator" when that method is ready 
+
+    players = player.Player.get_all_players()
+
+    return render_template ('dashboard.html', user = user.User.get_by_user_id(data), players=players)
+
+
+@app.route('/players/create')
+def create_player():
+    if not session['user_id']:
+        return redirect('/logout')
+    return render_template('player_create.html')
+
+
+@app.route('/players/process', methods=['POST'])
+def process_player():
+    if not session['user_id']:
+        return redirect('/logout')
+    
+    if not player.Player.validate_player(request.form):
+        return redirect('/players/create')
+    
+    player.Player.save_player(request.form)
+    return redirect('/dashboard')
+
+@app.route('/players/<int:id>')
+def display_player(id):
+    if not session['user_id']:
+        return redirect('/logout')
+    data = {
+        'id': id
+    }
+    return render_template('player_view.html', player=player.Player.get_one_player_by_id(data))
+
 
 # @app.route('/create_link')
 # def new_player():
@@ -99,8 +130,3 @@ def dashboard():
 #     Player.update(data)
 #     return redirect("/dash")
 
-
-# @app.route("/players/delete/<int:player_id>")
-# def delete(player_id):
-#     Player.delete(player_id)
-#     return redirect("/dash")

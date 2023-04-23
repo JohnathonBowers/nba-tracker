@@ -11,34 +11,37 @@
 </head>
 <body>
     <div>
-        <div class="">
-            <div class="">
+        <div>
+            <div>
                 <a href="/dash">Home</a>
                 <a href="/logout">Logout</a>
             </div>
-            <h1 class="">Add a Player</h1>
+            <h1>Add a Player</h1>
         </div>
         
         <div>
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            {% for message in messages %}
-            <p class="">{{message}}</p> 
-            {% endfor %}
-            {% endif %}
+            {% with messages = get_flashed_messages(category_filter=['player']) %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{message}}</p> 
+                    {% endfor %}
+                {% endif %}
             {% endwith %}
         </div>
 
-        <form action="/create" method="post" 
-            class="">
-            <div class="">
-                <div class="">
-                    <label for="playername" class=""><strong>Player:  </strong></label>
-                    <input type="text" name="playername" class="" id="playername">
+        <form action="/players/process" method="post" class=>
+            <div>
+                <div>
+                    <label for="first_name">First Name:</label>
+                    <input type="text" name="first_name">
                 </div>
-                <div class="">
-                    <label for="playerteam" class=""><strong>Team:  </strong></label>
-                    <select name="playerteam">
+                <div>
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" name="last_name">
+                </div>
+                <div>
+                    <label for="team">Team:</label>
+                    <select name="team">
                         <option>Atlanta Hawks</option>
                         <option>Boston Celtics</option>
                         <option>Brooklyn Nets</option>
@@ -71,9 +74,9 @@
                         <option>Washington Wizards</option>
                     </select>
                 </div>
-                <div class="">
-                    <label for="playerposition" class=""><strong>Position:  </strong></label>
-                    <select name="playerposition">
+                <div>
+                    <label for="position">Position:</label>
+                    <select name="position">
                         <option>PG</option>
                         <option>SG</option>
                         <option>SF</option>
@@ -81,29 +84,29 @@
                         <option>C</option>
                     </select>
                 </div>
-                <div class="">
-                    <label for="playerppg" class=""><strong>PPG:  </strong></label>
-                    <input type="number" name="playerppg" class="" id="playerppg">
+                <div>
+                    <label for="points_pg" >PPG:</label>
+                    <input type="number" name="points_pg">
                 </div>
-                <div class="">
-                    <label for="playerrpg" class=""><strong>RPG:  </strong></label>
-                    <input type="number" name="playerrpg" class="" id="playerrpg">
+                <div>
+                    <label for="rebounds_pg">RPG:</label>
+                    <input type="number" name="rebounds_pg">
                 </div>
-                <div class="">
-                    <label for="playerapg" class=""><strong>APG:  </strong></label>
-                    <input type="number" name="playerapg" class="" id="playerapg">
+                <div>
+                    <label for="assists_pg">APG:</label>
+                    <input type="number" name="assists_pg" >
                 </div>
-                <div class="">
-                    <label for="playerspg" class=""><strong>SPG:  </strong></label>
-                    <input type="number" name="playerspg" class="" id="playerspg">
+                <div>
+                    <label for="steals_pg">SPG:</label>
+                    <input type="number" name="steals_pg">
                 </div>
-                <div class="">
-                    <label for="playerbpg" class=""><strong>BPG:  </strong></label>
-                    <input type="number" name="playerbpg" class="" id="playerbpg">
+                <div>
+                    <label for="blocks_pg" >BPG: </label>
+                    <input type="number" name="blocks_pg">
                 </div>
                 <input type="hidden" name="user_id" value="{{session['user_id']}}">
-                <div class="">
-                    <input type="submit" class="" value="Add your NBA player">
+                <div>
+                    <input type="submit" value="Add your NBA player">
                 </div>
             </div>
         </form>

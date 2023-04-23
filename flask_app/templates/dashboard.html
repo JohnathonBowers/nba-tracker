@@ -11,62 +11,37 @@
 <body>
     <h1>Welcome, {{ user.first_name }}!</h1>
     <a href="/logout">Log out</a>
-    <!-- <div class="container">
 
-        <div class="">
-            <h1 class="">Hi, !</h1>
-            <div>
-                <input type="text" placeholder="Search for a player"><button>Search</button>
-                <a href="/logout">Logout</a>
-            </div>
-        </div>
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Team</th>
+            <th>Follow Your Player</th>
+            <th>Actions</th>
+        </tr>
+        {% for player in players %}
+            <tr>
+                <td>{{player.first_name}}</td>
+                <td>{{player.last_name}}</td>
+                <td>{{player.team}}</td>
+                <td></td>
+                {% if player.user_id == session.user_id %}
+                    <td><a href="/players/{{player.id}}">View</a> <a href="/players/edit/{{player.id}}">Edit</a> <a href="/players/delete/{{player.id}}">Delete</a></td>
+                {% endif %}
+                {% if player.user_id != session.user_id %}
+                    <td><a href="/players/{{player.id}}">View</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
 
-        <h2 class="">Around the NBA, find and add all of your favorite players, and follow them!</h2>
-        <div class="">
-            <table class="">
-                <thead class="">
-                    <tr>
-                        <th>Player</th>
-                        <th>Team</th>
-                        <th>Follow your player</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for player in players: %}
-                    <tr>
-                        <td>{{player.playername}}</td>
-                        <td>{{player.playerteam}}</td>
-                        <td></td>
-                        <td>
-                            <a href="/view_player/{{player.id}}">view</a>
-                            {% if player.user.id == user.id: %}
-                            <a href="/view_player/edit/{{player.id}}">edit</a>
-                            <a href="/players/delete/{{player.id}}">delete</a>
-                            {% endif %}
-                            
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="">
-            <table class="">
-                <thead>
-                    <tr>
-                        <th>Your Players</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for player in players: %}
-                    <tr>
-                        <td>{{player.playername}}</td>
-                    </tr>
-                    {% endfor %}
-            </table>
-        </div>
-        <a href="/create_link"><button>Add a player to the database!</button></a>
-    </div> -->
+    </table>
+
+    
+    
+
+    <a href="/players/create"><button>Add a player to the database!</button></a>
+    
+
 </body>
 </html>
