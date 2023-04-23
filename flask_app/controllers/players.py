@@ -47,70 +47,29 @@ def display_player(id):
     }
     return render_template('player_view.html', player=player.Player.get_one_player_by_id(data))
 
-
-# @app.route('/create_link')
-# def new_player():
-#     if 'user_id' not in session:
-#         return redirect('/')
-#     return render_template('create_player.html')
-
-
-# @app.route('/create', methods=["POST"])
-# def new_players():
-#     if 'user_id' not in session:
-#         return redirect('/')
-#     if not Player.validate_player(request.form):
-#         return redirect('/create_link')
-#     print(request.form)
-#     data = {
-#         "playername": request.form["playername"],
-#         "playerteam" : request.form["playerteam"],
-#         "playerposition": request.form["playerposition"],
-#         "playerppg" : request.form["playerppg"],
-#         "playerrpg": request.form["playerrpg"],
-#         "playerapg" : request.form["playerapg"],
-#         "playerspg": request.form["playerspg"],
-#         "playerbpg" : request.form["playerbpg"],
-#         'users_id': session['user_id']
-#     }
+@app.route('/players/<int:id>/edit', methods=['POST'])
+def display_edit_player_form(id):
+    if not session.get('user_id'):
+        return redirect('/login')
+    if session.get('user_id'):
+        player_data = {
+            'player_id': id
+        }
+        user_data = {
+            'user_id': session.get('user_id')
+        }
+        returned_player = player.Player.get_one_player_with_creator(player_data)
+        if session.get('user_id') != returned_player.creator.id:
+            return redirect('/dashboard')
+        return render_template('player_edit.html', player = player.Player.get_one_player_with_creator(player_data), user = user.User.get_by_user_id(user_data))
     
-#     Player.create_a_player(data)
-    
-#     return redirect('/dash')
-
-# @app.route('/dash')
-# def i_have_been_made():
-#     if 'user_id' not in session:
-#         return redirect('/')
-#     data = {
-#         'id': session['user_id']
-#     }
-#     players = Player.get_all_with_maker()
-
-
-#     return render_template('dashboard.html', current_user = User.get_by_id(data),  players=players)
-
-# @app.route("/view_player/<int:player_id>")
-# def show_me_da_playerss(player_id):
-#     if 'user_id' not in session:
-#         return redirect('/')
-#     data = {
-#         'id': session['user_id']
-#     }
-#     player_data = {
-#         'id' : player_id
-#     }
-#     current_player = Player.get_player_by_id(player_data)
-
-#     return render_template('view_player.html', current_user = User.get_by_id(data), current_player=current_player)
-
-# @app.route("/view_player/<int:player_id>")
-# def edit_player(player_id):
-#     data = {
-#         'id': player_id
-#     }
-#     players = Player.get_all_with_maker()
-#     return render_template("edit.html", players = players)
+@app.route('/players/edit-submit', methods=['POST'])
+def edit_player():
+    if not player.Player.validate_player(request.form):
+        player_id = request.form.get('player_id')
+        return redirect (f'/players/edit/{player_id}')
+    player.Player.edit_player(request.form)
+    return redirect ('/dashboard')
 
 # @app.route('/view_player/edit/<int:player_id>', methods=['POST'])
 # def update_player(player_id):

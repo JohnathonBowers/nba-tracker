@@ -3,7 +3,7 @@ from flask_app.models import user
 from flask import flash
 
 class Player:
-    # db = 'mag_sub_schema'
+    db = 'stat_sheet_schema'
     def __init__(self, data):
         self.id = data['id']
         self.first_name = data['first_name']
@@ -94,6 +94,21 @@ class Player:
         results = connectToMySQL('stat_sheet_schema').query_db(query, data)
         return cls(results[0])
 
+    @classmethod
+    def get_one_player_with_creator(cls, data):
+        query = 'SELECT * FROM players LEFT JOIN users ON players.user_id = users.id WHERE players.id = %(player_id)s;'
+        result = connectToMySQL(cls.db).query_db(query, data)
+        player = cls(result[0])
+        player_creator_info = {
+            'id': result[0].get('users.id'),
+            'first_name': result[0].get('users.first_name'),
+            'email': result[0].get('users.email'),
+            'password': result[0].get('users.password'),
+            'created_at': result[0].get('users.created_at'),
+            'updated_at': result[0].get('users.updated_at')
+        }
+        player.creator = user.User(player_creator_info)
+        return player
 
     # @classmethod
     # def create_a_player(cls,data):
