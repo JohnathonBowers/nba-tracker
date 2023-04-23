@@ -11,6 +11,8 @@ def home():
 
 @app.route('/login')
 def login_reg():
+    if session.get('user_id'):
+        return redirect ('/dashboard')
     return render_template ('login_reg.html')
 
 @app.route('/login-register', methods=['POST'])
@@ -45,9 +47,6 @@ def register_user():
 
 @app.route('/login-login', methods=['POST'])
 def login_user():
-    if not user.User.validate_login(request.form):
-        session['login_email'] = request.form.get('login_email')
-        return redirect ('/login')
     data = {
         'email': request.form.get('login_email')
     }
