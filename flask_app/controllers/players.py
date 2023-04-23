@@ -9,6 +9,7 @@ bcrypt = Bcrypt(app)
 @app.route('/dashboard')
 def dashboard():
     if not session.get('user_id'):
+        session.clear()
         return redirect('/login')
     data = {
         'user_id': session.get('user_id')
