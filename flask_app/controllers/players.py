@@ -2,10 +2,19 @@ from flask_app import app
 from flask import render_template, redirect, request, session
 from flask_bcrypt import Bcrypt 
 
-from flask_app.models.player import Player
-from flask_app.models.user import User
+from flask_app.models import user, player
 
 bcrypt = Bcrypt(app)
+
+@app.route('/dashboard')
+def dashboard():
+    if not session.get('user_id'):
+        return redirect('/login')
+    data = {
+        'user_id': session.get('user_id')
+    }
+    return render_template ('dashboard.html', user = user.User.get_by_user_id(data))
+    # Add "player = player.Player.get_all_players_with_creator" when that method is ready 
 
 # @app.route('/create_link')
 # def new_player():
