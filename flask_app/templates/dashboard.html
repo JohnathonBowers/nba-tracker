@@ -6,22 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="">
-
     <title>Dashboard</title>
 </head>
-
 <body>
-    <div class="container">
+    <h1>Welcome, {{ user.first_name }}!</h1>
+    <a href="/logout">Log out</a>
+    <!-- <div class="container">
 
         <div class="">
-            <h1 class="">Hi, {{current_user.firstname}}!</h1>
+            <h1 class="">Hi, !</h1>
             <div>
                 <input type="text" placeholder="Search for a player"><button>Search</button>
                 <a href="/logout">Logout</a>
             </div>
         </div>
 
-        <!-- <h2 class="">Around the NBA, find and add all of your favorite players, and follow them!</h2>
+        <h2 class="">Around the NBA, find and add all of your favorite players, and follow them!</h2>
         <div class="">
             <table class="">
                 <thead class="">
@@ -65,8 +65,8 @@
                     </tr>
                     {% endfor %}
             </table>
-        </div> -->
+        </div>
         <a href="/create_link"><button>Add a player to the database!</button></a>
-    </div>
+    </div> -->
 </body>
 </html>

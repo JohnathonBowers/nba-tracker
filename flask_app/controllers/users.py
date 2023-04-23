@@ -1,68 +1,69 @@
 from flask_app import app
 from flask import render_template, redirect, request, session, flash
 from flask_bcrypt import Bcrypt
-from flask_app.models.user import User
-from flask_app.models.player import Player
+from flask_app.models import user
+
 bcrypt = Bcrypt(app)
 
-
 @app.route('/')
-def index_page():
-    return render_template('index.html')
+def home():
+    return redirect ('/login')
 
-@app.route('/register', methods=["POST"])
-def register():
-    print(request.form)
-    if not User.validate_user(request.form):
-        return redirect('/')
-    pw_hash = bcrypt.generate_password_hash(request.form['password'])
-    print(pw_hash)
+@app.route('/login')
+def login_reg():
+    if session.get('user_id'):
+        return redirect ('/dashboard')
+    return render_template ('login_reg.html')
+
+@app.route('/login-register', methods=['POST'])
+def register_user():
+    if not user.User.validate_registration(request.form):
+        session['first_name'] = request.form.get('first_name')
+        session['last_name'] = request.form.get('last_name')
+        session['email'] = request.form.get('email')
+        return redirect ('/login')
     data = {
-        # "id" : request.form["id"],
-        "firstname": request.form["firstname"],
-        "lastname" : request.form["lastname"],
-        "email" : request.form["email"],
-        "password" : pw_hash
-        }
-    user_id = User.save(data)
-    session['user_id'] = user_id
-    return redirect('/dash')
-
-@app.route('/login', methods = ['POST'])
-def login():
-
-    print(request.form)
-
-    data = { "email" : request.form["email"] }
-    user_in_db = User.get_by_email(data)
-    if not user_in_db:
-        flash("Invalid Email/Password")
-        return redirect("/")
-    if not bcrypt.check_password_hash(user_in_db.password, request.form['password']):
-        flash("Invalid Email/Password")
-        return redirect('/')
-    session['user_id'] = user_in_db.id
-    return redirect("/dash")
-
-# @app.route('/dash')
-# def dashboard():
-#     data = {
-#         'id': session['user_id']
-#     }
-#     user = User.get_by_id(data)
-#     return render_template('dash.html', user=user, )
-
-
-@app.route("/users/account/<int:user_id>")
-def edit(user_id):
-    data = {
-        'id': user_id
+        'email': request.form.get('email')
     }
-    user = User.get_by_id(data)
-    players = Player.get_all_with_maker()
-    return render_template("edit.html", user=user, players = players)
+    user_in_db = user.User.get_by_email(data)
+    if user_in_db:
+        session['first_name'] = request.form.get('first_name')
+        session['last_name'] = request.form.get('last_name')
+        session['email'] = request.form.get('email')
+        flash('This email is already associated with an account. Please try logging in with this email or creating an account with a different email.', 'email')
+        return redirect ('/login')
+    if not user_in_db:
+        if session:
+            session.clear()
+        pw_hash = bcrypt.generate_password_hash(request.form.get('password'))
+        data = {
+            'first_name': request.form.get('first_name'),
+            'last_name': request.form.get('last_name'),
+            'email': request.form.get('email'),
+            'password': pw_hash
+        }
+        session['user_id'] = user.User.create_user(data)
+        return redirect ('/dashboard')
+
+@app.route('/login-login', methods=['POST'])
+def login_user():
+    data = {
+        'email': request.form.get('login_email')
+    }
+    user_in_db = user.User.get_by_email(data)
+    if not user_in_db:
+        session['login_email'] = request.form.get('login_email')
+        flash('Invalid login attempt', 'login')
+        return redirect ('/login')
+    if not bcrypt.check_password_hash(user_in_db.password, request.form.get('login_password')):
+        session['login_email'] = request.form.get('login_email')
+        flash('Invalid login attempt', 'login')
+        return redirect ('/')
+    session.clear()
+    session['user_id'] = user_in_db.id
+    return redirect ('/dashboard')
 
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect('/')
+    return redirect ('/login')
