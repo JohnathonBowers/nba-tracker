@@ -86,23 +86,23 @@
                 </div>
                 <div>
                     <label for="points_pg" >PPG:</label>
-                    <input type="number" name="points_pg">
+                    <input type="number" name="points_pg" step="any" min="0" max="100">
                 </div>
                 <div>
                     <label for="rebounds_pg">RPG:</label>
-                    <input type="number" name="rebounds_pg">
+                    <input type="number" name="rebounds_pg" step="any" min="0" max="100">
                 </div>
                 <div>
                     <label for="assists_pg">APG:</label>
-                    <input type="number" name="assists_pg" >
+                    <input type="number" name="assists_pg" step="any" min="0" max="100">
                 </div>
                 <div>
                     <label for="steals_pg">SPG:</label>
-                    <input type="number" name="steals_pg">
+                    <input type="number" name="steals_pg" step="any" min="0" max="100">
                 </div>
                 <div>
                     <label for="blocks_pg" >BPG: </label>
-                    <input type="number" name="blocks_pg">
+                    <input type="number" name="blocks_pg" step="any" min="0" max="100">
                 </div>
                 <input type="hidden" name="user_id" value="{{session['user_id']}}">
                 <div>
