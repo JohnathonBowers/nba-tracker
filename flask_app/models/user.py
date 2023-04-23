@@ -46,16 +46,16 @@ class User:
             is_valid = False
         return is_valid
 
-    @staticmethod
-    def validate_login(user):
-        is_valid = True
-        if len(user.get('login_email')) < 1:
-            flash('Email address required', 'login_email')
-            is_valid = False
-        if not EMAIL_REGEX.match(user.get('login_email')):
-            flash('Please enter a valid email address', 'login_email')
-            is_valid = False
-        return is_valid
+    # @staticmethod
+    # def validate_login(user):
+    #     is_valid = True
+    #     if len(user.get('login_email')) < 1:
+    #         flash('Email address required', 'login_email')
+    #         is_valid = False
+    #     if not EMAIL_REGEX.match(user.get('login_email')):
+    #         flash('Please enter a valid email address', 'login_email')
+    #         is_valid = False
+    #     return is_valid
     
     @classmethod
     def get_by_email(cls, data):
