@@ -13,14 +13,14 @@
     <div>
         <div>
             <div>
-                <a href="/dash">Home</a>
+                <a href="/dashboard">Home</a>
                 <a href="/logout">Logout</a>
             </div>
             <h1>Edit Your Player</h1>
         </div>
         
         <div>
-            {% with messages = get_flashed_messages(category_filter=['player']) %}
+            {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in messages %}
                         <p>{{message}}</p> 
@@ -78,35 +78,35 @@
                 <div>
                     <label for="position">Position:</label>
                     <select name="position">
-                        <option>PG</option>
-                        <option>SG</option>
-                        <option>SF</option>
-                        <option>PF</option>
-                        <option>C</option>
+                        <option {% if player.position == 'PG' %}selected{% endif %}>PG</option>
+                        <option {% if player.position == 'SG' %}selected{% endif %}>SG</option>
+                        <option {% if player.position == 'SF' %}selected{% endif %}>SF</option>
+                        <option {% if player.position == 'PF' %}selected{% endif %}>PF</option>
+                        <option {% if player.position == 'C' %}selected{% endif %}>C</option>
                     </select>
                 </div>
                 <div>
                     <label for="points_pg" >PPG:</label>
-                    <input type="number" name="points_pg" step="any" min="0" max="100">
+                    <input type="number" name="points_pg" step="any" value="{{ player.points_pg }}">
                 </div>
                 <div>
                     <label for="rebounds_pg">RPG:</label>
-                    <input type="number" name="rebounds_pg" step="any" min="0" max="100">
+                    <input type="number" name="rebounds_pg" step="any" value="{{ player.rebounds_pg }}">
                 </div>
                 <div>
                     <label for="assists_pg">APG:</label>
-                    <input type="number" name="assists_pg" step="any" min="0" max="100">
+                    <input type="number" name="assists_pg" step="any" value="{{ player.assists_pg }}">
                 </div>
                 <div>
                     <label for="steals_pg">SPG:</label>
-                    <input type="number" name="steals_pg" step="any" min="0" max="100">
+                    <input type="number" name="steals_pg" step="any" value="{{ player.steals_pg }}">
                 </div>
                 <div>
                     <label for="blocks_pg" >BPG: </label>
-                    <input type="number" name="blocks_pg" step="any" min="0" max="100">
+                    <input type="number" name="blocks_pg" step="any" value="{{ player.blocks_pg }}">
                 </div>
                 <div>
-                    <input type="submit" value="Add your NBA player">
+                    <input type="submit" value="Edit your NBA player">
                 </div>
             </div>
         </form>

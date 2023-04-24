@@ -47,7 +47,7 @@ def display_player(id):
     }
     return render_template('player_view.html', player=player.Player.get_one_player_by_id(data))
 
-@app.route('/players/<int:id>/edit', methods=['POST'])
+@app.route('/players/<int:id>/edit')
 def display_edit_player_form(id):
     if not session.get('user_id'):
         return redirect('/login')
@@ -67,25 +67,7 @@ def display_edit_player_form(id):
 def edit_player():
     if not player.Player.validate_player(request.form):
         player_id = request.form.get('player_id')
-        return redirect (f'/players/edit/{player_id}')
+        return redirect (f'/players/{player_id}/edit')
     player.Player.edit_player(request.form)
     return redirect ('/dashboard')
-
-# @app.route('/view_player/edit/<int:player_id>', methods=['POST'])
-# def update_player(player_id):
-#     if not Player.validate_player(request.form):
-#         return redirect(f"/view_player/edit/{player_id}")
-#     data = {
-#         'id': player_id,
-#         "playername": request.form["playername"],
-#         "playerteam" : request.form["playerteam"],
-#         "playerposition": request.form["playerposition"],
-#         "playerppg" : request.form["playerppg"],
-#         "playerrpg": request.form["playerrpg"],
-#         "playerapg" : request.form["playerapg"],
-#         "playerspg": request.form["playerspg"],
-#         "playerbpg" : request.form["playerbpg"],
-#     }
-#     Player.update(data)
-#     return redirect("/dash")
 

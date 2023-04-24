@@ -3,7 +3,6 @@ from flask_app.models import user
 from flask import flash
 
 class Player:
-    db = 'stat_sheet_schema'
     def __init__(self, data):
         self.id = data['id']
         self.first_name = data['first_name']
@@ -35,19 +34,19 @@ class Player:
         if not player['position']:
             flash('Please select a position', 'player')
             is_valid = False
-        if not player['points_pg']:
+        if float(player['points_pg']) < 0:
             flash('Points per game must be zero or higher', 'player')
             is_valid = False
-        if not player['rebounds_pg']:
+        if float(player['rebounds_pg']) < 0:
             flash('Rebounds per game must be zero or higher', 'player')
             is_valid = False
-        if not player['assists_pg']:
+        if float(player['assists_pg']) < 0:
             flash('Assists per game must be zero or higher', 'player')
             is_valid = False
-        if not player['steals_pg']:
+        if float(player['steals_pg']) < 0:
             flash('Steals per game must be zero or higher', 'player')
             is_valid = False
-        if not player['blocks_pg']:
+        if float(player['blocks_pg']) < 0:
             flash('Blocks per game must be zero or higher', 'player')
             is_valid = False
         return is_valid
@@ -97,7 +96,7 @@ class Player:
     @classmethod
     def get_one_player_with_creator(cls, data):
         query = 'SELECT * FROM players LEFT JOIN users ON players.user_id = users.id WHERE players.id = %(player_id)s;'
-        result = connectToMySQL(cls.db).query_db(query, data)
+        result = connectToMySQL('stat_sheet_schema').query_db(query, data)
         player = cls(result[0])
         player_creator_info = {
             'id': result[0].get('users.id'),
@@ -109,6 +108,11 @@ class Player:
         }
         player.creator = user.User(player_creator_info)
         return player
+
+    @classmethod
+    def edit_player(cls, data):
+        query = 'UPDATE players SET first_name = %(first_name)s, last_name = %(last_name)s, team = %(team)s, position = %(position)s, points_pg = %(points_pg)s, rebounds_pg = %(rebounds_pg)s, assists_pg = %(assists_pg)s, steals_pg = %(steals_pg)s, blocks_pg = %(blocks_pg)s WHERE id = %(player_id)s;'
+        return connectToMySQL('stat_sheet_schema').query_db(query, data)
 
     # @classmethod
     # def create_a_player(cls,data):
