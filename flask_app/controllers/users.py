@@ -10,7 +10,7 @@ bcrypt = Bcrypt(app)
 def index_page():
     return render_template('index.html')
 
-@app.route('/register', methods=["POST"])
+@app.route('/register', methods=['POST'])
 def register():
     print(request.form)
     if not User.validate_user(request.form):
@@ -19,8 +19,8 @@ def register():
     print(pw_hash)
     data = {
         "id" : request.form["id"],
-        "first_name": request.form["first_name"],
-        "last_name" : request.form["last_name"],
+        "firstname": request.form["firstname"],
+        "lastname" : request.form["lastname"],
         "email" : request.form["email"],
         "password" : pw_hash
         }
@@ -44,7 +44,7 @@ def login():
     session['user_id'] = user_in_db.id
     return redirect("/dash")
 
-@app.route("/users/account/<int:user_id>")
+@app.route("/users/account/<int:user_id>", methods = ['POST'])
 def edit(user_id):
     data = {
         'id': user_id

@@ -1,12 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-</head>
-<body>
-    <h1>Testing</h1>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NBA Player Tracker</title>
+        <link rel="stylesheet" href="static/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container" >
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class="flashes text-danger"> 
+                {% for message in messages %}
+                <li>{{message}}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
+
+            <form action="/register" method="post">
+                <h1>Registration</h1>
+                <input type="hidden" name="id">
+                <label for="firstname">First Name:</label>
+                <input type="text" name="firstname" placeholder="Enter first name here">
+                <label for="lastname">Last Name:</label>
+                <input type="text" name="lastname" placeholder="Enter last name here">
+                <label for="email">Email:</label>
+                <input type="text" name="email" placeholder="Enter email here">
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="Enter password here">
+                <label for="confirmpass">Confirm Password:</label>
+                <input type="password" name="confirm_pass" placeholder="One more time">
+                <button type="submit" class="btn">Register</button>
+            </form>
+        </div>
+
+        <div class="container">
+            <form action="/login" method="post">
+                <h1>Login</h1>
+                <label for="email">Email:</label>
+                <input type="text" name="email">
+                <label for="password">Password:</label>
+                <input type="password" name="password">
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </body>
 </html>

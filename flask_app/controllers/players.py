@@ -63,7 +63,7 @@ def show_me_da_playerss(player_id):
 
     return render_template('view_player.html', current_user = User.get_by_id(data), current_player=current_player)
 
-@app.route("/view_player/<int:player_id>")
+@app.route("/view_player/<int:player_id>", methods=['POST'])
 def edit(player_id):
     data = {
         'id': player_id

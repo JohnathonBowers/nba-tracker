@@ -23,9 +23,8 @@ class User:
 
 
     @staticmethod
-    def validate_user( user ):
+    def validate_user(user):
         is_valid = True
-
         if len(user['firstname']) < 3:
             flash("First name must be at least 3 characters.")
             print('firstname flash')
@@ -34,7 +33,6 @@ class User:
             flash("Last name must be at least 3 characters.")
             print('lastname flash')
             is_valid = False
-
         if not EMAIL_REGEX.match(user['email']): 
             flash("Please use the correct email format")
             print('email flash')
