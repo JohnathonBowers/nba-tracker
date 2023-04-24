@@ -2,6 +2,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app import app
 from flask_bcrypt import Bcrypt        
 from flask import flash
+from flask_app.models import player
 import re
 
 bcrypt = Bcrypt(app)
@@ -18,7 +19,7 @@ class User:
         self.password = data.get('password')
         self.created_at = data.get('created_at')
         self.updated_at = data.get('updated_at')
-        self.players = []
+        self.following = []
 
     @staticmethod
     def validate_registration(user):
@@ -64,3 +65,27 @@ class User:
     def create_user(cls, data):
         query = 'INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);'
         return connectToMySQL(cls.db).query_db(query, data)
+    
+    @classmethod
+    def get_user_with_all_players_hes_following(cls, data):
+        query = 'SELECT * FROM users LEFT JOIN follows ON users.id = follows.user_id LEFT JOIN players ON follows.player_id = players.id WHERE users.id = %(user_id)s;'
+        results = connectToMySQL(cls.db).query_db(query, data)
+        user = cls(results[0])
+        for row in results:
+            player_data = {
+                'id': row['players.id'],
+                'first_name': row['players.first_name'],
+                'last_name': row['players.last_name'],
+                'team': row['team'],
+                'position': row['position'],
+                'points_pg': row['points_pg'],
+                'rebounds_pg': row['rebounds_pg'],
+                'assists_pg': row['assists_pg'],
+                'steals_pg': row['steals_pg'],
+                'blocks_pg': row['blocks_pg'],
+                'created_at': None,
+                'updated_at': None,
+                'user_id': row['user_id']
+            }
+            user.following.append(player.Player(player_data))
+        return user

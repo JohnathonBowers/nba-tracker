@@ -25,7 +25,15 @@
                 <td>{{player.first_name}}</td>
                 <td>{{player.last_name}}</td>
                 <td>{{player.team}}</td>
-                <td></td>
+                {% for user in player.followers %}
+                    {% if user.id == session.user_id %}
+                        <td><a href="/players/unfollow/{{player.id}}"><button>Unfollow</button></a></td>
+                    {% endif %}
+                    {% if user.id != session.user_id %}
+                        <td><a href="/players/follow/{{player.id}}"><button>Follow</button></a></td>
+                    {% endif %}
+                {% endfor %}
+
                 {% if player.user_id == session.user_id %}
                     <td><a href="/players/{{player.id}}">View</a> <a href="/players/{{player.id}}/edit">Edit</a> <a href="/players/{{player.id}}/delete">Delete</a></td>
                 {% endif %}
@@ -37,10 +45,18 @@
 
     </table>
 
-    
-    
-
     <a href="/players/create"><button>Add a player to the database!</button></a>
+
+    <h2>Players You're Following:</h2>
+
+    {% for player in user.following %}
+        {% if player.first_name == None %}
+            <p>You're not following any player yet...</p>
+        {% endif %}
+        {% if player.first_name != None %}
+            <a href="/players/{{player.id}}"><p>{{player.first_name}} {{player.last_name}}</p></a>
+        {% endif %}
+    {% endfor %}
     
 
 </body>

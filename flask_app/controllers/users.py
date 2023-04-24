@@ -11,8 +11,8 @@ def home():
 
 @app.route('/login')
 def login_reg():
-    if session.get('user_id'):
-        return redirect ('/dashboard')
+    # if session.get('user_id'):
+    #     return redirect ('/dashboard')
     return render_template ('login_reg.html')
 
 @app.route('/login-register', methods=['POST'])
