@@ -29,5 +29,10 @@
                 <h3>Blocks Per Game: {{player.blocks_pg}}</h3>
             </div>
     </div>
+    <div>
+        {% if player.user_id == session.user_id %}
+        <a href="/players/{{player.id}}/edit">Edit Player</a> <a href="/players/{{player.id}}/delete">Delete Player</a>
+        {% endif %}
+    </div>
 </body>
 </html>

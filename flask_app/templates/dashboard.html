@@ -27,7 +27,7 @@
                 <td>{{player.team}}</td>
                 <td></td>
                 {% if player.user_id == session.user_id %}
-                    <td><a href="/players/{{player.id}}">View</a> <a href="/players/edit/{{player.id}}">Edit</a> <a href="/players/delete/{{player.id}}">Delete</a></td>
+                    <td><a href="/players/{{player.id}}">View</a> <a href="/players/{{player.id}}/edit">Edit</a> <a href="/players/{{player.id}}/delete">Delete</a></td>
                 {% endif %}
                 {% if player.user_id != session.user_id %}
                     <td><a href="/players/{{player.id}}">View</a></td>

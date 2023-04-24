@@ -7,103 +7,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="">
 
-    <title>New Player!</title>
+    <title>Edit Player</title>
 </head>
 <body>
     <div>
-        <div class="">
-            <div class="">
-                <a href="/dash">Home</a>
+        <div>
+            <div>
+                <a href="/dashboard">Home</a>
                 <a href="/logout">Logout</a>
             </div>
-            <h1 class="">Edit your Player</h1>
+            <h1>Edit Your Player</h1>
         </div>
         
         <div>
             {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            {% for message in messages %}
-            <p class="">{{message}}</p> 
-            {% endfor %}
-            {% endif %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{message}}</p> 
+                    {% endfor %}
+                {% endif %}
             {% endwith %}
         </div>
 
-        <form action="/view_player/edit/{{player.id}}" method="post" 
-            class="">
-            <div class="">
-                <div class="">
-                    <label for="playername" class=""><strong>Player:  </strong></label>
-                    <input type="text" name="playername" class="" id="playername" value="{{player.playername}}">
+        <form action="/players/edit-submit" method="post" class=>
+            <div>
+                <div>
+                    <input type="hidden" name="player_id" value="{{ player.id }}">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" name="first_name" value="{{ player.first_name }}">
                 </div>
-                <div class="">
-                    <label for="playerteam" class=""><strong>Team:  </strong></label>
-                    <select name="playerteam" value="{{player.playerteam}}">
-                        <option>Atlanta Hawks</option>
-                        <option>Boston Celtics</option>
-                        <option>Brooklyn Nets</option>
-                        <option>Charlotte Hornets</option>
-                        <option>Chicago Bulls</option>
-                        <option>Cleveland Cavaliers</option>
-                        <option>Dallas Mavericks</option>
-                        <option>Denver Nuggets</option>
-                        <option>Detroit Pistons</option>
-                        <option>Golden State Warriors</option>
-                        <option>Houston Rockets</option>
-                        <option>Indiana Pacers</option>
-                        <option>Los Angeles Clippers</option>
-                        <option>Los Angeles Lakers</option>
-                        <option>Memphis Grizzlies</option>
-                        <option>Miami Heat</option>
-                        <option>Milwaukee Bucks</option>
-                        <option>Minnesota Timberwolves</option>
-                        <option>New Orleans Pelicans</option>
-                        <option>New York Knicks</option>
-                        <option>Oklahoma City Thunder</option>
-                        <option>Orlando Magic</option>
-                        <option>Philadelphia 76ers</option>
-                        <option>Phoenix Suns</option>
-                        <option>Portland Trail Blazers</option>
-                        <option>Sacramento Kings</option>
-                        <option>San Antonio Spurs</option>
-                        <option>Toronto Raptors</option>
-                        <option>Utah Jazz</option>
-                        <option>Washington Wizards</option>
+                <div>
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" name="last_name" value="{{ player.last_name }}">
+                </div>
+                <div>
+                    <label for="team">Team:</label>
+                    <select name="team">
+                        <option {% if player.team == 'Atlanta Hawks' %}selected{% endif %}>Atlanta Hawks</option>
+                        <option {% if player.team == 'Boston Celtics' %}selected{% endif %}>Boston Celtics</option>
+                        <option {% if player.team == 'Brooklyn Nets' %}selected{% endif %}>Brooklyn Nets</option>
+                        <option {% if player.team == 'Charlotte Hornets' %}selected{% endif %}>Charlotte Hornets</option>
+                        <option {% if player.team == 'Chicago Bulls' %}selected{% endif %}>Chicago Bulls</option>
+                        <option {% if player.team == 'Cleveland Cavaliers' %}selected{% endif %}>Cleveland Cavaliers</option>
+                        <option {% if player.team == 'Dallas Mavericks' %}selected{% endif %}>Dallas Mavericks</option>
+                        <option {% if player.team == 'Denver Nuggets' %}selected{% endif %}>Denver Nuggets</option>
+                        <option {% if player.team == 'Detroit Pistons' %}selected{% endif %}>Detroit Pistons</option>
+                        <option {% if player.team == 'Golden State Warriors' %}selected{% endif %}>Golden State Warriors</option>
+                        <option {% if player.team == 'Houston Rockets' %}selected{% endif %}>Houston Rockets</option>
+                        <option {% if player.team == 'Indiana Pacers' %}selected{% endif %}>Indiana Pacers</option>
+                        <option {% if player.team == 'Los Angeles Clippers' %}selected{% endif %}>Los Angeles Clippers</option>
+                        <option {% if player.team == 'Los Angeles Lakers' %}selected{% endif %}>Los Angeles Lakers</option>
+                        <option {% if player.team == 'Memphis Grizzlies' %}selected{% endif %}>Memphis Grizzlies</option>
+                        <option {% if player.team == 'Miami Heat' %}selected{% endif %}>Miami Heat</option>
+                        <option {% if player.team == 'Milwaukee Bucks' %}selected{% endif %}>Milwaukee Bucks</option>
+                        <option {% if player.team == 'Minnesota Timberwolves' %}selected{% endif %}>Minnesota Timberwolves</option>
+                        <option {% if player.team == 'New Orleans Pelicans' %}selected{% endif %}>New Orleans Pelicans</option>
+                        <option {% if player.team == 'New York Knicks' %}selected{% endif %}>New York Knicks</option>
+                        <option {% if player.team == 'Oklahoma City Thunder' %}selected{% endif %}>Oklahoma City Thunder</option>
+                        <option {% if player.team == 'Orlando Magic' %}selected{% endif %}>Orlando Magic</option>
+                        <option {% if player.team == 'Philadelphia 76ers' %}selected{% endif %}>Philadelphia 76ers</option>
+                        <option {% if player.team == 'Phoenix Suns' %}selected{% endif %}>Phoenix Suns</option>
+                        <option {% if player.team == 'Portland Trail Blazers' %}selected{% endif %}>Portland Trail Blazers</option>
+                        <option {% if player.team == 'Sacramento Kings' %}selected{% endif %}>Sacramento Kings</option>
+                        <option {% if player.team == 'San Antonio Spurs' %}selected{% endif %}>San Antonio Spurs</option>
+                        <option {% if player.team == 'Toronto Raptors' %}selected{% endif %}>Toronto Raptors</option>
+                        <option {% if player.team == 'Utah Jazz' %}selected{% endif %}>Utah Jazz</option>
+                        <option {% if player.team == 'Washington Wizards' %}selected{% endif %}>Washington Wizards</option>
                     </select>
                 </div>
-                <div class="">
-                    <label for="playerposition" class=""><strong>Position:  </strong></label>
-                    <select name="playerposition" value="{{player.playerposition}}">
-                        <option>PG</option>
-                        <option>SG</option>
-                        <option>SF</option>
-                        <option>PF</option>
-                        <option>C</option>
+                <div>
+                    <label for="position">Position:</label>
+                    <select name="position">
+                        <option {% if player.position == 'PG' %}selected{% endif %}>PG</option>
+                        <option {% if player.position == 'SG' %}selected{% endif %}>SG</option>
+                        <option {% if player.position == 'SF' %}selected{% endif %}>SF</option>
+                        <option {% if player.position == 'PF' %}selected{% endif %}>PF</option>
+                        <option {% if player.position == 'C' %}selected{% endif %}>C</option>
                     </select>
                 </div>
-                <div class="">
-                    <label for="playerppg" class=""><strong>PPG:  </strong></label>
-                    <input type="number" name="playerppg" class="" id="playerppg" value="{{player.playerppg}}">
+                <div>
+                    <label for="points_pg" >PPG:</label>
+                    <input type="number" name="points_pg" step="any" value="{{ player.points_pg }}">
                 </div>
-                <div class="">
-                    <label for="playerrpg" class=""><strong>RPG:  </strong></label>
-                    <input type="number" name="playerrpg" class="" id="playerrpg" value="{{player.playerrpg}}">
+                <div>
+                    <label for="rebounds_pg">RPG:</label>
+                    <input type="number" name="rebounds_pg" step="any" value="{{ player.rebounds_pg }}">
                 </div>
-                <div class="">
-                    <label for="playerapg" class=""><strong>APG:  </strong></label>
-                    <input type="number" name="playerapg" class="" id="playerapg" value="{{player.playerapg}}">
+                <div>
+                    <label for="assists_pg">APG:</label>
+                    <input type="number" name="assists_pg" step="any" value="{{ player.assists_pg }}">
                 </div>
-                <div class="">
-                    <label for="playerspg" class=""><strong>SPG:  </strong></label>
-                    <input type="number" name="playerspg" class="" id="playerspg" value="{{player.playerspg}}">
+                <div>
+                    <label for="steals_pg">SPG:</label>
+                    <input type="number" name="steals_pg" step="any" value="{{ player.steals_pg }}">
                 </div>
-                <div class="">
-                    <label for="playerbpg" class=""><strong>BPG:  </strong></label>
-                    <input type="number" name="playerbpg" class="" id="playerbpg" value="{{player.playerbpg}}">
+                <div>
+                    <label for="blocks_pg" >BPG: </label>
+                    <input type="number" name="blocks_pg" step="any" value="{{ player.blocks_pg }}">
                 </div>
-                <input type="hidden" name="user_id" value="{{session['user_id']}}">
-                <div class="">
-                    <input type="submit" class="" value="Edit your NBA player">
+                <div>
+                    <input type="submit" value="Edit your NBA player">
                 </div>
             </div>
         </form>
