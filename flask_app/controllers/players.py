@@ -15,9 +15,9 @@ def dashboard():
         'user_id': session.get('user_id')
     }
 
-    players = player.Player.get_all_players()
+    players = player.Player.get_all_players_with_theirs_followers()
 
-    return render_template ('dashboard.html', user = user.User.get_by_user_id(data), players=players)
+    return render_template ('dashboard.html', user = user.User.get_user_with_all_players_hes_following(data), players=players)
 
 
 @app.route('/players/create')
@@ -110,3 +110,27 @@ def delete_player(id):
             return redirect('/dashboard')
         player.Player.delete_player(player_data)
         return redirect('/dashboard')
+
+@app.route('/players/follow/<int:id>')
+def follow_player(id):
+    if not session.get('user_id'):
+        return redirect('/login')
+    data = {
+        'user_id': session.get('user_id'),
+        'player_id': id
+    }
+    player.Player.follow_player(data)
+    return redirect('/dashboard')
+
+@app.route('/players/unfollow/<int:id>')
+def unfollow_player(id):
+    if not session.get('user_id'):
+        return redirect('/login')
+    data = {
+        'user_id': session.get('user_id'),
+        'player_id': id
+    }
+    player.Player.unfollow_player(data)
+    return redirect('/dashboard')
+
+

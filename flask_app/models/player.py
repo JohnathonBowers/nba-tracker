@@ -1,5 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app.models import user     
+from flask_app.models import user
 from flask import flash
 
 class Player:
@@ -18,6 +18,7 @@ class Player:
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']
         self.creator = None
+        self.followers = []
 
     @staticmethod
     def validate_player(player):
@@ -133,3 +134,62 @@ class Player:
     def delete_player(cls, data):
         query = 'DELETE FROM players WHERE id = %(player_id)s'
         return connectToMySQL('stat_sheet_schema').query_db(query, data)
+    
+    @classmethod
+    def follow_player(cls, data):
+        query = 'INSERT INTO follows (user_id, player_id) VALUES ( %(user_id)s , %(player_id)s );'
+        return connectToMySQL('stat_sheet_schema').query_db(query, data)
+    
+    @classmethod
+    def unfollow_player(cls, data):
+        query = 'DELETE FROM follows WHERE user_id = %(user_id)s AND player_id = %(player_id)s;'
+        return connectToMySQL('stat_sheet_schema').query_db(query, data)
+
+
+    @classmethod
+    def check_if_already_following(cls, data):
+        query = 'SELECT * FROM follows WHERE user_id = %(user_id)s AND player_id = %(player_id)s;'
+        results = connectToMySQL('stat_sheet_schema').query_db(query, data)
+        if results:
+            return False
+        return True
+    
+    @classmethod
+    def get_player_with_all_followers(cls, data):
+        query = 'SELECT * FROM players LEFT JOIN follows ON players.id = follows.player_id LEFT JOIN users ON follows.user_id = users.id WHERE players.id = %(player_id)s;'
+        results = connectToMySQL('stat_sheet_schema').query_db(query, data)
+        player = cls(results[0])
+        for row in results:
+            user_data = {
+                'id': row['users.id'],
+                'first_name': row['users.first_name'],
+                'last_name': row['users.last_name'],
+                'email': None,
+                'password': None,
+                'created_at': None,
+                'updated_at': None
+            }
+            player.followers.append(user.User(user_data))
+        return player
+
+    @classmethod
+    def get_all_players_with_theirs_followers(cls):
+        query = 'SELECT * FROM players LEFT JOIN follows ON players.id = follows.player_id LEFT JOIN users ON follows.user_id = users.id;'
+        results = connectToMySQL('stat_sheet_schema').query_db(query)
+        all_players = []
+        for row in results:
+            one_player = cls(row)
+            user_data = {
+                'id': row['users.id'],
+                'first_name': row['users.first_name'],
+                'last_name': row['users.last_name'],
+                'email': None,
+                'password': None,
+                'created_at': None,
+                'updated_at': None
+            }
+            one_follower = user.User(user_data)
+            one_player.followers.append(one_follower)
+            all_players.append(one_player)
+        return all_players
+
