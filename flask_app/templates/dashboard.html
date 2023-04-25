@@ -5,59 +5,81 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Dashboard</title>
 </head>
 <body>
-    <h1>Welcome, {{ user.first_name }}!</h1>
-    <a href="/logout">Log out</a>
+    <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="text-white bg-dark w-50 p-1">Welcome, {{ user.first_name }}!</h1>
+        <a href="/players/create" class="btn btn-dark">Add a player to the database!</a>
+        <a href="/logout" class="btn btn-dark">Log out</a>
+    </div>
 
-    <table>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Team</th>
-            <th>Follow Your Player</th>
-            <th>Actions</th>
-        </tr>
-        {% for player in players %}
+    <table class="table table-bordered table-striped text-white">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">First Name:</th>
+            <th scope="col">Last Name:</th>
+            <th scope="col">Team:</th>
+            <th scope="col">Follow Your Player:</th>
+            <th scope="col">Actions:</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for player in players %}
             <tr>
-                <td>{{player.first_name}}</td>
-                <td>{{player.last_name}}</td>
-                <td>{{player.team}}</td>
-                {% for user in player.followers %}
-                    {% if user.id == session.user_id %}
-                        <td><a href="/players/unfollow/{{player.id}}"><button>Unfollow</button></a></td>
-                    {% endif %}
-                    {% if user.id != session.user_id %}
-                        <td><a href="/players/follow/{{player.id}}"><button>Follow</button></a></td>
-                    {% endif %}
-                {% endfor %}
-
-                {% if player.user_id == session.user_id %}
-                    <td><a href="/players/{{player.id}}">View</a> <a href="/players/{{player.id}}/edit">Edit</a> <a href="/players/{{player.id}}/delete">Delete</a></td>
+              <td class="bg-secondary">{{player.first_name}}</td>
+              <td class="bg-secondary">{{player.last_name}}</td>
+              <td class="bg-secondary">{{player.team}}</td>
+              {% for user in player.followers %}
+                {% if user.id == session.user_id %}
+                  <td class="bg-secondary"><a href="/players/unfollow/{{player.id}}" class="btn btn-dark">Unfollow</a></td>
                 {% endif %}
-                {% if player.user_id != session.user_id %}
-                    <td><a href="/players/{{player.id}}">View</a></td>
+                {% if user.id != session.user_id %}
+                  <td class="bg-secondary"><a href="/players/follow/{{player.id}}" class="btn btn-dark">Follow</a></td>
                 {% endif %}
+              {% endfor %}
+      
+              {% if player.user_id == session.user_id %}
+                <td class="bg-secondary">
+                  <a href="/players/{{player.id}}" class="btn btn-dark">View</a>
+                  <a href="/players/{{player.id}}/edit" class="btn btn-dark">Edit</a>
+                  <a href="/players/{{player.id}}/delete" class="btn btn-dark">Delete</a>
+                </td>
+              {% endif %}
+              {% if player.user_id != session.user_id %}
+                <td><a href="/players/{{player.id}}" class="btn btn-primary">View</a></td>
+              {% endif %}
             </tr>
-        {% endfor %}
+          {% endfor %}
+        </tbody>
+      </table>
 
+
+
+
+    <h2 class="text-white">Players You're Following:</h2>
+
+    <table class="table bg-secondary">
+        <thead class="thead-dark">
+            <tr class="bg-secondary">
+                <th scope="col">First Name:</th>
+                <th scope="col">Last Name:</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in user.following %}
+                {% if player.first_name != None %}
+                    <tr>
+                        <td><a href="/players/{{player.id}}"class="text-white">{{player.first_name}}</a></td>
+                        <td><a href="/players/{{player.id}}"class="text-white">{{player.last_name}}</a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
     </table>
-
-    <a href="/players/create"><button>Add a player to the database!</button></a>
-
-    <h2>Players You're Following:</h2>
-
-    {% for player in user.following %}
-        {% if player.first_name == None %}
-            <p>You're not following any player yet...</p>
-        {% endif %}
-        {% if player.first_name != None %}
-            <a href="/players/{{player.id}}"><p>{{player.first_name}} {{player.last_name}}</p></a>
-        {% endif %}
-    {% endfor %}
     
-
 </body>
 </html>

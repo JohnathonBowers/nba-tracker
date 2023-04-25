@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href=>
-    <title>The Stat Sheet</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <div>
-        <h1>The Stat Sheet</h1>
+    <link rel="stylesheet" href="/static/styles.css">
+<body>
+    <h1 class="text-white bg-secondary w-25 p-1 mx-auto">The Stat Sheet</h1>
+    <div class = "form-container">
         <div>
-            <h2>Register</h2>
             <form action="/login-register" method="post">
                 <div>
+                    <h2>Register</h2>
                     <label for="first_name">First Name:</label>
                     <input type="text" name="first_name" value="{{session['first_name']}}">
                 </div>    
@@ -92,8 +93,7 @@
                 <input type="submit" value="Register">
             </form>
         </div>
-        <div>
-            <h2>Log In</h2>
+        <div class="form-container">
             <form action="/login-login" method="post">
                 <div>
                     {% with names = get_flashed_messages(category_filter=['login']) %}
@@ -107,6 +107,7 @@
                     {% endwith %}
                 </div>
                 <div>
+                    <h2>Log In</h2>
                     <label for="login_email">Email:</label>
                     <input type="text" name="login_email" value="{{session['login_email']}}">
                 </div>
