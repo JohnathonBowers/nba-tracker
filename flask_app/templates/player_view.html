@@ -9,7 +9,20 @@
     <title>The Stat Sheet</title>
 </head>
 <body>
-
+    <nav class="navbar bg-warning d-flex align-items-center px-4">
+        <div class="me-2">
+            <a href="/dashboard" class="navbar-brand me-2">The Stat Sheet</a>
+        </div>
+        <div class="ms-2 me-auto">
+            <a href="/dashboard" class="nav-link ms-2">Home</a>
+        </div>
+        <div class="me-2">
+            <p class="my-auto">Welcome, {{ user.first_name }}</p>
+        </div>
+        <div class="ms-2">
+            <a href="/logout"><button class="btn btn-outline-dark">Log Out</button></a>
+        </div>
+    </nav>
     <div class="d-flex justify-content-between align-items-center">
         <h1 class="w-75 p-1">
             <span class="text-white">{{player.first_name}} {{player.last_name}}</span>

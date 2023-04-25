@@ -24,7 +24,10 @@ def dashboard():
 def create_player():
     if not session['user_id']:
         return redirect('/logout')
-    return render_template('player_create.html')
+    data = {
+        'user_id': session.get('user_id')
+    }
+    return render_template('player_create.html', user = user.User.get_by_user_id(data))
 
 
 @app.route('/players/process', methods=['POST'])
@@ -68,10 +71,13 @@ def process_player():
 def display_player(id):
     if not session['user_id']:
         return redirect('/logout')
-    data = {
+    player_data = {
         'id': id
     }
-    return render_template('player_view.html', player=player.Player.get_one_player_by_id(data))
+    user_data = {
+        'user_id': session.get('user_id')
+    }
+    return render_template('player_view.html', player=player.Player.get_one_player_by_id(player_data), user=user.User.get_by_user_id(user_data))
 
 @app.route('/players/<int:id>/edit')
 def display_edit_player_form(id):
