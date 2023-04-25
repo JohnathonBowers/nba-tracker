@@ -23,108 +23,175 @@
             <a href="/logout"><button class="btn btn-outline-dark">Log Out</button></a>
         </div>
     </nav>
-    <div class="d-flex justify-content-between align-items-center">
-        <h1 class="w-75 p-1">
-            <span class="text-white">Edit {{player.first_name}} {{player.last_name}}</span>
-        </h1>
-        <a href="/dashboard" class="btn btn-dark">Home</a>
-        <a href="/logout" class="btn btn-dark">Log out</a>
-    </div>
-    
-        <div>
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <p>{{message}}</p> 
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-        </div>
-
-        <form action="/players/edit-submit" method="post" class=>
+    <div class="container col-md-8 mt-5 bg-secondary bg-gradient rounded shadow p-4" style="--bs-bg-opacity: .9;">
+        <h1 class="text-white text-center my-4">Edit Player Profile</h1>
+        <form action="/players/edit-submit" method="post" class="px-4">
+            <div class="row">
+                <div class="col-md-6 pe-2">
+                    <div>
+                        <input type="hidden" name="player_id" value="{{player.id}}">
+                        <label for="first_name" class="text-white form-label mb-2">First Name:</label>
+                        <input type="text" name="first_name" class="form-control mb-2" value="{{player.first_name}}">
+                    </div>
+                    <div>
+                        {% with names = get_flashed_messages(category_filter=['first_name']) %}
+                            {% if names %}
+                                {% for msg in names %}
+                                    <p class="text-warning my-2">{{ msg }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+                <div class="col-md-6 ps-2">
+                    <div>
+                        <label for="last_name" class="text-white form-label mb-2">Last Name:</label>
+                        <input type="text" name="last_name" class="form-control mb-2" value="{{player.last_name}}">
+                    </div>
+                    <div>
+                        {% with names = get_flashed_messages(category_filter=['last_name']) %}
+                            {% if names %}
+                                {% for msg in names %}
+                                    <p class="text-warning my-2">{{ msg }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 pe-2">
+                    <div>
+                        <label for="team" class="text-white form-label mb-2">Team:</label>
+                        <select class="form-select mb-2" name="team">
+                            <option {% if player.team == 'Atlanta Hawks' %}selected{% endif %}>Atlanta Hawks</option>
+                            <option {% if player.team == 'Boston Celtics' %}selected{% endif %}>Boston Celtics</option>
+                            <option {% if player.team == 'Brooklyn Nets' %}selected{% endif %}>Brooklyn Nets</option>
+                            <option {% if player.team == 'Charlotte Hornets' %}selected{% endif %}>Charlotte Hornets</option>
+                            <option {% if player.team == 'Chicago Bulls' %}selected{% endif %}>Chicago Bulls</option>
+                            <option {% if player.team == 'Cleveland Cavaliers' %}selected{% endif %}>Cleveland Cavaliers</option>
+                            <option {% if player.team == 'Dallas Mavericks' %}selected{% endif %}>Dallas Mavericks</option>
+                            <option {% if player.team == 'Denver Nuggets' %}selected{% endif %}>Denver Nuggets</option>
+                            <option {% if player.team == 'Detroit Pistons' %}selected{% endif %}>Detroit Pistons</option>
+                            <option {% if player.team == 'Golden State Warriors' %}selected{% endif %}>Golden State Warriors</option>
+                            <option {% if player.team == 'Houston Rockets' %}selected{% endif %}>Houston Rockets</option>
+                            <option {% if player.team == 'Indiana Pacers' %}selected{% endif %}>Indiana Pacers</option>
+                            <option {% if player.team == 'Los Angeles Clippers' %}selected{% endif %}>Los Angeles Clippers</option>
+                            <option {% if player.team == 'Los Angeles Lakers' %}selected{% endif %}>Los Angeles Lakers</option>
+                            <option {% if player.team == 'Memphis Grizzlies' %}selected{% endif %}>Memphis Grizzlies</option>
+                            <option {% if player.team == 'Miami Heat' %}selected{% endif %}>Miami Heat</option>
+                            <option {% if player.team == 'Milwaukee Bucks' %}selected{% endif %}>Milwaukee Bucks</option>
+                            <option {% if player.team == 'Minnesota Timberwolves' %}selected{% endif %}>Minnesota Timberwolves</option>
+                            <option {% if player.team == 'New Orleans Pelicans' %}selected{% endif %}>New Orleans Pelicans</option>
+                            <option {% if player.team == 'New York Knicks' %}selected{% endif %}>New York Knicks</option>
+                            <option {% if player.team == 'Oklahoma City Thunder' %}selected{% endif %}>Oklahoma City Thunder</option>
+                            <option {% if player.team == 'Orlando Magic' %}selected{% endif %}>Orlando Magic</option>
+                            <option {% if player.team == 'Philadelphia 76ers' %}selected{% endif %}>Philadelphia 76ers</option>
+                            <option {% if player.team == 'Phoenix Suns' %}selected{% endif %}>Phoenix Suns</option>
+                            <option {% if player.team == 'Portland Trail Blazers' %}selected{% endif %}>Portland Trail Blazers</option>
+                            <option {% if player.team == 'Sacramento Kings' %}selected{% endif %}>Sacramento Kings</option>
+                            <option {% if player.team == 'San Antonio Spurs' %}selected{% endif %}>San Antonio Spurs</option>
+                            <option {% if player.team == 'Toronto Raptors' %}selected{% endif %}>Toronto Raptors</option>
+                            <option {% if player.team == 'Utah Jazz' %}selected{% endif %}>Utah Jazz</option>
+                            <option {% if player.team == 'Washington Wizards' %}selected{% endif %}>Washington Wizards</option>
+                        </select>
+                    </div>
+                    <div>
+                        {% with names = get_flashed_messages(category_filter=['team']) %}
+                            {% if names %}
+                                {% for msg in names %}
+                                    <p class="text-warning my-2">{{ msg }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+                <div class="col-md-6 ps-2">
+                    <div>
+                        <label for="position" class="text-white form-label mb-2">Position:</label>
+                        <select name="position" class="form-select mb-2">
+                            <option {% if player.position == 'PG' %}selected{% endif %}>PG</option>
+                            <option {% if player.position == 'SG' %}selected{% endif %}>SG</option>
+                            <option {% if player.position == 'SF' %}selected{% endif %}>SF</option>
+                            <option {% if player.position == 'PF' %}selected{% endif %}>PF</option>
+                            <option {% if player.position == 'C' %}selected{% endif %}>C</option>
+                        </select>
+                    </div>
+                    <div>
+                        {% with names = get_flashed_messages(category_filter=['position']) %}
+                            {% if names %}
+                                {% for msg in names %}
+                                    <p class="text-warning my-2">{{ msg }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row justify-content-between">
+                <div class="pe-2">
+                    <label for="points_pg" class="text-white form-label mb-2">PPG:</label>
+                    <input type="number" name="points_pg" class="form-control mb-2" step="any" value="{{player.points_pg}}">
+                </div>
+                <div class="px-2">
+                    <label for="rebounds_pg" class="text-white form-label mb-2">RPG:</label>
+                    <input type="number" name="rebounds_pg" class="form-control mb-2" step="any" value="{{player.rebounds_pg}}">
+                </div>
+                <div class="px-2">
+                    <label for="assists_pg" class="text-white form-label mb-2">APG:</label>
+                    <input type="number" name="assists_pg" class="form-control mb-2" step="any" value="{{player.assists_pg}}">
+                </div>
+                <div class="px-2">
+                    <label for="steals_pg" class="text-white form-label mb-2">SPG:</label>
+                    <input type="number" name="steals_pg" class="form-control mb-2" step="any" value="{{player.steals_pg}}">
+                </div>
+                <div class="ps-2">
+                    <label for="blocks_pg" class="text-white form-label mb-2">BPG:</label>
+                    <input type="number" name="blocks_pg" class="form-control mb-2" step="any" value="{{player.blocks_pg}}">
+                </div>
+            </div>
             <div>
-                <div>
-                    <input type="hidden" name="player_id" value="{{ player.id }}">
-                    <label for="first_name">First Name:</label>
-                    <input type="text" name="first_name" value="{{ player.first_name }}">
-                </div>
-                <div>
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" name="last_name" value="{{ player.last_name }}">
-                </div>
-                <div>
-                    <label for="team">Team:</label>
-                    <select name="team">
-                        <option {% if player.team == 'Atlanta Hawks' %}selected{% endif %}>Atlanta Hawks</option>
-                        <option {% if player.team == 'Boston Celtics' %}selected{% endif %}>Boston Celtics</option>
-                        <option {% if player.team == 'Brooklyn Nets' %}selected{% endif %}>Brooklyn Nets</option>
-                        <option {% if player.team == 'Charlotte Hornets' %}selected{% endif %}>Charlotte Hornets</option>
-                        <option {% if player.team == 'Chicago Bulls' %}selected{% endif %}>Chicago Bulls</option>
-                        <option {% if player.team == 'Cleveland Cavaliers' %}selected{% endif %}>Cleveland Cavaliers</option>
-                        <option {% if player.team == 'Dallas Mavericks' %}selected{% endif %}>Dallas Mavericks</option>
-                        <option {% if player.team == 'Denver Nuggets' %}selected{% endif %}>Denver Nuggets</option>
-                        <option {% if player.team == 'Detroit Pistons' %}selected{% endif %}>Detroit Pistons</option>
-                        <option {% if player.team == 'Golden State Warriors' %}selected{% endif %}>Golden State Warriors</option>
-                        <option {% if player.team == 'Houston Rockets' %}selected{% endif %}>Houston Rockets</option>
-                        <option {% if player.team == 'Indiana Pacers' %}selected{% endif %}>Indiana Pacers</option>
-                        <option {% if player.team == 'Los Angeles Clippers' %}selected{% endif %}>Los Angeles Clippers</option>
-                        <option {% if player.team == 'Los Angeles Lakers' %}selected{% endif %}>Los Angeles Lakers</option>
-                        <option {% if player.team == 'Memphis Grizzlies' %}selected{% endif %}>Memphis Grizzlies</option>
-                        <option {% if player.team == 'Miami Heat' %}selected{% endif %}>Miami Heat</option>
-                        <option {% if player.team == 'Milwaukee Bucks' %}selected{% endif %}>Milwaukee Bucks</option>
-                        <option {% if player.team == 'Minnesota Timberwolves' %}selected{% endif %}>Minnesota Timberwolves</option>
-                        <option {% if player.team == 'New Orleans Pelicans' %}selected{% endif %}>New Orleans Pelicans</option>
-                        <option {% if player.team == 'New York Knicks' %}selected{% endif %}>New York Knicks</option>
-                        <option {% if player.team == 'Oklahoma City Thunder' %}selected{% endif %}>Oklahoma City Thunder</option>
-                        <option {% if player.team == 'Orlando Magic' %}selected{% endif %}>Orlando Magic</option>
-                        <option {% if player.team == 'Philadelphia 76ers' %}selected{% endif %}>Philadelphia 76ers</option>
-                        <option {% if player.team == 'Phoenix Suns' %}selected{% endif %}>Phoenix Suns</option>
-                        <option {% if player.team == 'Portland Trail Blazers' %}selected{% endif %}>Portland Trail Blazers</option>
-                        <option {% if player.team == 'Sacramento Kings' %}selected{% endif %}>Sacramento Kings</option>
-                        <option {% if player.team == 'San Antonio Spurs' %}selected{% endif %}>San Antonio Spurs</option>
-                        <option {% if player.team == 'Toronto Raptors' %}selected{% endif %}>Toronto Raptors</option>
-                        <option {% if player.team == 'Utah Jazz' %}selected{% endif %}>Utah Jazz</option>
-                        <option {% if player.team == 'Washington Wizards' %}selected{% endif %}>Washington Wizards</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="position">Position:</label>
-                    <select name="position">
-                        <option {% if player.position == 'PG' %}selected{% endif %}>PG</option>
-                        <option {% if player.position == 'SG' %}selected{% endif %}>SG</option>
-                        <option {% if player.position == 'SF' %}selected{% endif %}>SF</option>
-                        <option {% if player.position == 'PF' %}selected{% endif %}>PF</option>
-                        <option {% if player.position == 'C' %}selected{% endif %}>C</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="points_pg" >PPG:</label>
-                    <input type="number" name="points_pg" step="any" value="{{ player.points_pg }}">
-                </div>
-                <div>
-                    <label for="rebounds_pg">RPG:</label>
-                    <input type="number" name="rebounds_pg" step="any" value="{{ player.rebounds_pg }}">
-                </div>
-                <div>
-                    <label for="assists_pg">APG:</label>
-                    <input type="number" name="assists_pg" step="any" value="{{ player.assists_pg }}">
-                </div>
-                <div>
-                    <label for="steals_pg">SPG:</label>
-                    <input type="number" name="steals_pg" step="any" value="{{ player.steals_pg }}">
-                </div>
-                <div>
-                    <label for="blocks_pg" >BPG: </label>
-                    <input type="number" name="blocks_pg" step="any" value="{{ player.blocks_pg }}">
-                </div>
-                <div>
-                    <input type="submit" value="Edit your NBA player">
-                </div>
+                {% with names = get_flashed_messages(category_filter=['points_pg']) %}
+                    {% if names %}
+                        {% for msg in names %}
+                            <p class="text-warning my-2">{{ msg }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% with names = get_flashed_messages(category_filter=['rebounds_pg']) %}
+                    {% if names %}
+                        {% for msg in names %}
+                            <p class="text-warning my-2">{{ msg }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% with names = get_flashed_messages(category_filter=['assists_pg']) %}
+                    {% if names %}
+                        {% for msg in names %}
+                            <p class="text-warning my-2">{{ msg }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% with names = get_flashed_messages(category_filter=['steals_pg']) %}
+                    {% if names %}
+                        {% for msg in names %}
+                            <p class="text-warning my-2">{{ msg }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% with names = get_flashed_messages(category_filter=['blocks_pg']) %}
+                    {% if names %}
+                        {% for msg in names %}
+                            <p class="text-warning my-2">{{ msg }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+                <button type="submit" class="btn btn-warning my-4">Submit</button>
             </div>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 </html>
-
-            
