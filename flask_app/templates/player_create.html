@@ -5,20 +5,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="">
-
-    <title>New Player!</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Create a New Player</title>
 </head>
 <body>
-    <div>
-        <div>
-            <div>
-                <a href="/dashboard">Home</a>
-                <a href="/logout">Logout</a>
-            </div>
-            <h1>Add a Player</h1>
-        </div>
-        
+
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="w-75 p-1">
+          <span class="text-white">Create A New Player</span>
+        </h1>
+        <a href="/dashboard" class="btn btn-dark">Home</a>
+        <a href="/logout" class="btn btn-dark">Log out</a>
+      </div>
         <div>
             {% with messages = get_flashed_messages(category_filter=['player']) %}
                 {% if messages %}
@@ -106,7 +105,7 @@
                 </div>
                 <input type="hidden" name="user_id" value="{{session['user_id']}}">
                 <div>
-                    <input type="submit" value="Add your NBA player">
+                    <input type="submit" class="btn btn-dark" value="Add your NBA player">
                 </div>
             </div>
         </form>

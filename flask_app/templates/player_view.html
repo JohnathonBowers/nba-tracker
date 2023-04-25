@@ -5,34 +5,62 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="">
-
-    <title>Player View</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>{{player.first_name}} {{player.last_name}}</title>
 </head>
 
 <body>
-    <div>
-        <a href="/dashboard">Home</a>
-        <a href="/logout">Logout</a>
+
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="w-75 p-1">
+            <span class="text-white">{{player.first_name}} {{player.last_name}}</span>
+        </h1>
+        <div>
+            {% if player.user_id == session.user_id %}
+            <a href="/players/{{player.id}}/edit" class="btn btn-dark">Edit Player</a>
+            {% endif %}
+        </div>
+        <a href="/dashboard" class="btn btn-dark">Home</a>
+        <a href="/logout" class="btn btn-dark">Log out</a>
     </div>
-    <div>
-            <h2>NBA Player...</h2>
-            <div>
-                <h2>{{player.first_name}}</h2>
-                <h2>{{player.last_name}}</h2>
-                <h3>{{player.team}}</h3>
-                <h3>{{player.position}}</h3>
-                <h3>Points Per Game: {{player.points_pg}}</h3>
-                <h3>Assists Per Game: {{player.rebounds_pg}}</h3>
-                <h3>Rebounds Per Game: {{player.assists_pg}}</h3>
-                <h3>Steals Per Game: {{player.steals_pg}}</h3>
-                <h3>Blocks Per Game: {{player.blocks_pg}}</h3>
-            </div>
+    
+    <div class="container">
+        <h2>{{player.first_name}} {{player.last_name}}</h2>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Team:</td>
+                    <td>{{player.team}}</td>
+                </tr>
+                <tr>
+                    <td>Position:</td>
+                    <td>{{player.position}}</td>
+                </tr>
+                <tr>
+                    <td>Points Per Game:</td>
+                    <td>{{player.points_pg}}</td>
+                </tr>
+                <tr>
+                    <td>Assists Per Game:</td>
+                    <td>{{player.rebounds_pg}}</td>
+                </tr>
+                <tr>
+                    <td>Rebounds Per Game:</td>
+                    <td>{{player.assists_pg}}</td>
+                </tr>
+                <tr>
+                    <td>Steals Per Game:</td>
+                    <td>{{player.steals_pg}}</td>
+                </tr>
+                <tr>
+                    <td>Blocks Per Game:</td>
+                    <td>{{player.blocks_pg}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <div>
-        {% if player.user_id == session.user_id %}
-        <a href="/players/{{player.id}}/edit">Edit Player</a> <a href="/players/{{player.id}}/delete">Delete Player</a>
-        {% endif %}
-    </div>
+    
 </body>
+
 </html>
