@@ -24,43 +24,43 @@ class Player:
     def validate_player(player):
         is_valid = True
         if len(player.get('first_name')) < 2:
-            flash('Player first name must be at least two characters long', 'player')
+            flash('Player first name must be at least two characters long', 'first_name')
             is_valid = False
         if len(player.get('last_name')) < 2:
-            flash('Player last name must be at least two characters long', 'player')
+            flash('Player last name must be at least two characters long', 'last_name')
             is_valid = False
         if not player.get('team'):
-            flash('Please select a team', 'player')
+            flash('Please select a team', 'team')
             is_valid = False
         if not player.get('position'):
-            flash('Please select a position', 'player')
+            flash('Please select a position', 'position')
             is_valid = False
         if not player.get('points_pg'):
-            flash('Please enter points per game', 'player')
+            flash('Please enter points per game', 'points_pg')
             is_valid = False
         if player.get('points_pg') and float(player.get('points_pg')) < 0:
-            flash('Points per game must be zero or higher', 'player')
+            flash('Points per game must be zero or higher', 'points_pg')
             is_valid = False
         if not player.get('rebounds_pg'):
-            flash('Please enter rebounds per game', 'player')
+            flash('Please enter rebounds per game', 'rebounds_pg')
             is_valid = False
         if player.get('rebounds_pg') and float(player.get('rebounds_pg')) < 0:
-            flash('Rebounds per game must be zero or higher', 'player')
+            flash('Rebounds per game must be zero or higher', 'rebounds_pg')
             is_valid = False
         if not player.get('assists_pg'):
-            flash('Please enter assists per game', 'player')
+            flash('Please enter assists per game', 'assists_pg')
             is_valid = False
         if player.get('assists_pg') and float(player.get('assists_pg')) < 0:
-            flash('Assists per game must be zero or higher', 'player')
+            flash('Assists per game must be zero or higher', 'assists_pg')
             is_valid = False
         if not player.get('steals_pg'):
-            flash('Please enter steals per game', 'player')
+            flash('Please enter steals per game', 'steals_pg')
             is_valid = False
         if player.get('steals_pg') and float(player.get('steals_pg')) < 0:
-            flash('Steals per game must be zero or higher', 'player')
+            flash('Steals per game must be zero or higher', 'steals_pg')
             is_valid = False
         if not player.get('blocks_pg'):
-            flash('Please enter blocks per game', 'player')
+            flash('Please enter blocks per game', 'blocks_pg')
             is_valid = False
         if player.get('blocks_pg') and float(player.get('blocks_pg')) < 0:
             flash('Blocks per game must be zero or higher', 'player')
@@ -74,7 +74,7 @@ class Player:
     
     @classmethod
     def get_all_players_with_creator(cls):
-        query = 'SELECT * from players JOIN users ON players.user_id = users.id;'
+        query = 'SELECT * from players JOIN users ON players.user_id = users.id ORDER BY players.last_name ASC;'
         results = connectToMySQL('stat_sheet_schema').query_db(query)
         all_players = []
         for row in results:
@@ -174,7 +174,7 @@ class Player:
 
     @classmethod
     def get_all_players_with_theirs_followers(cls):
-        query = 'SELECT * FROM players LEFT JOIN follows ON players.id = follows.player_id LEFT JOIN users ON follows.user_id = users.id;'
+        query = 'SELECT * FROM players LEFT JOIN follows ON players.id = follows.player_id LEFT JOIN users ON follows.user_id = users.id ORDER BY players.last_name;'
         results = connectToMySQL('stat_sheet_schema').query_db(query)
         all_players = []
         for row in results:

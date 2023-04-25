@@ -68,7 +68,7 @@ class User:
     
     @classmethod
     def get_user_with_all_players_hes_following(cls, data):
-        query = 'SELECT * FROM users LEFT JOIN follows ON users.id = follows.user_id LEFT JOIN players ON follows.player_id = players.id WHERE users.id = %(user_id)s;'
+        query = 'SELECT * FROM users LEFT JOIN follows ON users.id = follows.user_id LEFT JOIN players ON follows.player_id = players.id WHERE users.id = %(user_id)s ORDER BY players.last_name ASC;'
         results = connectToMySQL(cls.db).query_db(query, data)
         user = cls(results[0])
         for row in results:
