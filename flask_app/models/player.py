@@ -29,10 +29,10 @@ class Player:
         if len(player.get('last_name')) < 2:
             flash('Player last name must be at least two characters long', 'last_name')
             is_valid = False
-        if not player.get('team'):
+        if player.get('team') == 'Select a team':
             flash('Please select a team', 'team')
             is_valid = False
-        if not player.get('position'):
+        if player.get('position') == 'Select a position':
             flash('Please select a position', 'position')
             is_valid = False
         if not player.get('points_pg'):
