@@ -19,6 +19,7 @@
         <div>
             {% if player.user_id == session.user_id %}
             <a href="/players/{{player.id}}/edit" class="btn btn-dark">Edit Player</a>
+            <a href="/players/{{player.id}}/delete">Delete Player</a>
             {% endif %}
         </div>
         <a href="/dashboard" class="btn btn-dark">Home</a>
