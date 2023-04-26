@@ -9,7 +9,7 @@
     <title>The Stat Sheet</title>
 </head>
 <body>
-    <nav class="navbar bg-warning d-flex align-items-center px-4">
+    <nav class="navbar sticky-top bg-warning d-flex align-items-center px-4">
         <div class="me-2">
             <a href="/dashboard" class="navbar-brand">The Stat Sheet</a>
         </div>
@@ -36,7 +36,7 @@
                     {% elif player.position == 'C'%}Center
                     {% endif %} for the {{player.team}}
                 </h5>
-                <table class="table table-bordered rounded my-4">
+                <table class="table table-bordered my-4">
                     <tbody>
                         <tr>
                             <td>Points Per Game:</td>

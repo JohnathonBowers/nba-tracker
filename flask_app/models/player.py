@@ -132,7 +132,7 @@ class Player:
     
     @classmethod
     def delete_player(cls, data):
-        query = 'DELETE FROM players WHERE id = %(player_id)s'
+        query = 'DELETE FROM players WHERE id = %(player_id)s;'
         return connectToMySQL('stat_sheet_schema').query_db(query, data)
     
     @classmethod
@@ -174,7 +174,7 @@ class Player:
 
     @classmethod
     def get_all_players_with_theirs_followers(cls):
-        query = 'SELECT * FROM players LEFT JOIN follows ON players.id = follows.player_id LEFT JOIN users ON follows.user_id = users.id ORDER BY players.last_name;'
+        query = 'SELECT * FROM players LEFT JOIN follows ON players.id = follows.player_id LEFT JOIN users ON follows.user_id = users.id;'
         results = connectToMySQL('stat_sheet_schema').query_db(query)
         all_players = []
         for row in results:
