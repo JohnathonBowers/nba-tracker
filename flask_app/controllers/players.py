@@ -14,10 +14,7 @@ def dashboard():
     data = {
         'user_id': session.get('user_id')
     }
-
-    players = player.Player.get_all_players_with_theirs_followers()
-
-    return render_template ('dashboard.html', user = user.User.get_user_with_all_players_hes_following(data), players=players)
+    return render_template ('dashboard.html', user = user.User.get_user_with_all_players_hes_following(data), players = player.Player.get_one_users_unfollowed_players(data))
 
 
 @app.route('/players/create')
@@ -34,7 +31,6 @@ def create_player():
 def process_player():
     if not session['user_id']:
         return redirect('/logout')
-    
     if not player.Player.validate_player(request.form):
         session['first_name'] = request.form.get('first_name')
         session['last_name'] = request.form.get('last_name')

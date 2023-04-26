@@ -32,52 +32,53 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
-            {% for player in user.following %}
-                {% if player.first_name == None %}
-                    <p class="my-2">No players in your follow list yet!</p>
-                {% endif %}
-                {% if player.first_name != None %}
-                    <p><a href="/players/{{player.id}}" class="my-2">{{player.first_name}} {{player.last_name}}</a></p>
-                {% endif %}
-            {% endfor %}
+            <table class="table table-borderless">
+                <tbody>
+                    {% for player in user.following %}
+                        {% if player.first_name == None %}
+                        <tr class="align-middle">
+                            <td>No players in your follow list yet!</td>
+                        </tr>
+                        {% else %}
+                        <tr class="align-middle">
+                            <td>{{player.first_name}} {{player.last_name}}</td>
+                            <td><a href="/players/unfollow/{{player.id}}"><button class="btn btn-warning me-2">Unfollow</button></a><a href="/players/{{player.id}}"><button class="btn btn-dark ms-2">View</button></a></td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="container col-md-10 mt-5 bg-secondary bg-gradient rounded shadow p-4" style="--bs-bg-opacity: .9;">
         <div class="row">
             <div class="p-4">
-                <h3 class="text-white text-center mb-4">Player Database</h3>
-                <table class="table table-light table-striped table-bordered">
+                <h3 class="text-white text-center mb-2">Players to Follow</h3>
+                <h6 class="text-white text-center mb-4">Click the "Follow" button to move a player to the "Your Follows" tab</h6>
+                <table class="table table-light table-striped">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Team</th>
-                            <th>Follow</th>
-                            <th>Actions</th>
+                            <th>Follow Player</th>
+                            <th>Other Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for player in players %}
-                        <tr>
+                        <tr class="align-middle">
                             <td>{{player.first_name}} {{player.last_name}}</td>
                             <td>{{player.team}}</td>
-                            {% for user in player.followers %}
-                                {% if user.id == session.user_id %}
-                                <td><a href="/players/unfollow/{{player.id}}" class="btn btn-warning">Unfollow</a></td>
-                                {% endif %}
-                                {% if user.id != session.user_id %}
-                                <td><a href="/players/follow/{{player.id}}" class="btn btn-outline-dark">Follow</a></td>
-                                {% endif %}
-                            {% endfor %}
-                    
+                            <td><a href="/players/follow/{{player.id}}" class="btn btn-warning">Follow</a></td>
                             {% if player.user_id == session.user_id %}
                                 <td>
-                                    <a href="/players/{{player.id}}" class="btn btn-outline-primary">View</a>
-                                    <a href="/players/{{player.id}}/edit" class="btn btn-outline-dark">Edit</a>
-                                    <a href="/players/{{player.id}}/delete" class="btn btn-outline-danger">Delete</a>
+                                    <a href="/players/{{player.id}}" class="btn btn-dark">View</a>
+                                    <a href="/players/{{player.id}}/edit" class="btn btn-secondary">Edit</a>
+                                    <a href="/players/{{player.id}}/delete" class="btn btn-danger">Delete</a>
                                 </td>
                             {% endif %}
                             {% if player.user_id != session.user_id %}
-                                <td><a href="/players/{{player.id}}" class="btn btn-outline-primary">View</a></td>
+                                <td><a href="/players/{{player.id}}" class="btn btn-dark">View</a></td>
                             {% endif %}
                         </tr>
                         {% endfor %}

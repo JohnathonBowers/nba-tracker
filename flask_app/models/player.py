@@ -145,7 +145,6 @@ class Player:
         query = 'DELETE FROM follows WHERE user_id = %(user_id)s AND player_id = %(player_id)s;'
         return connectToMySQL('stat_sheet_schema').query_db(query, data)
 
-
     @classmethod
     def check_if_already_following(cls, data):
         query = 'SELECT * FROM follows WHERE user_id = %(user_id)s AND player_id = %(player_id)s;'
@@ -154,7 +153,10 @@ class Player:
             return False
         return True
     
-
+    @classmethod
+    def get_one_users_unfollowed_players(cls, data):
+        query = 'SELECT * FROM players WHERE players.id NOT IN (SELECT player_id FROM follows WHERE user_id = %(user_id)s) ORDER BY players.last_name ASC;'
+        return connectToMySQL('stat_sheet_schema').query_db(query, data)
 
     @classmethod
     def get_all_players_with_theirs_followers(cls):
