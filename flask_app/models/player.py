@@ -154,23 +154,7 @@ class Player:
             return False
         return True
     
-    @classmethod
-    def get_player_with_all_followers(cls, data):
-        query = 'SELECT * FROM players LEFT JOIN follows ON players.id = follows.player_id LEFT JOIN users ON follows.user_id = users.id WHERE players.id = %(player_id)s;'
-        results = connectToMySQL('stat_sheet_schema').query_db(query, data)
-        player = cls(results[0])
-        for row in results:
-            user_data = {
-                'id': row['users.id'],
-                'first_name': row['users.first_name'],
-                'last_name': row['users.last_name'],
-                'email': None,
-                'password': None,
-                'created_at': None,
-                'updated_at': None
-            }
-            player.followers.append(user.User(user_data))
-        return player
+
 
     @classmethod
     def get_all_players_with_theirs_followers(cls):
