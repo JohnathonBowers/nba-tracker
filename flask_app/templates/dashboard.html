@@ -42,7 +42,7 @@
                         {% else %}
                         <tr class="align-middle">
                             <td>{{player.first_name}} {{player.last_name}}</td>
-                            <td><a href="/players/unfollow/{{player.id}}"><button class="btn btn-warning me-2">Unfollow</button></a><a href="/players/{{player.id}}"><button class="btn btn-dark ms-2">View</button></a></td>
+                            <td><a href="/players/unfollow/{{player.id}}"><button class="btn btn-warning btn-sm me-2">Unfollow</button></a><a href="/players/{{player.id}}"><button class="btn btn-dark btn-sm ms-2">View</button></a></td>
                         </tr>
                         {% endif %}
                     {% endfor %}
@@ -69,16 +69,16 @@
                         <tr class="align-middle">
                             <td>{{player.first_name}} {{player.last_name}}</td>
                             <td>{{player.team}}</td>
-                            <td><a href="/players/follow/{{player.id}}" class="btn btn-warning">Follow</a></td>
+                            <td><a href="/players/follow/{{player.id}}" class="btn btn-warning btn-sm">Follow</a></td>
                             {% if player.user_id == session.user_id %}
                                 <td>
-                                    <a href="/players/{{player.id}}" class="btn btn-dark">View</a>
-                                    <a href="/players/{{player.id}}/edit" class="btn btn-secondary">Edit</a>
-                                    <a href="/players/{{player.id}}/delete" class="btn btn-danger">Delete</a>
+                                    <a href="/players/{{player.id}}" class="btn btn-dark btn-sm my-1">View</a>
+                                    <a href="/players/{{player.id}}/edit" class="btn btn-secondary btn-sm my-1">Edit</a>
+                                    <a href="/players/{{player.id}}/delete" class="btn btn-danger btn-sm my-1">Delete</a>
                                 </td>
                             {% endif %}
                             {% if player.user_id != session.user_id %}
-                                <td><a href="/players/{{player.id}}" class="btn btn-dark">View</a></td>
+                                <td><a href="/players/{{player.id}}" class="btn btn-dark btn-small btn-sm">View</a></td>
                             {% endif %}
                         </tr>
                         {% endfor %}
