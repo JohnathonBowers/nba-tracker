@@ -45,15 +45,8 @@ The Stat Sheet offers users the ability to create their own NBA player profiles 
 
 ## Dev Dependencies
 
--   [axios](https://www.npmjs.com/package/axios)
--   [bcrypt](https://www.npmjs.com/package/bcrypt)
--   [cookie-parser](https://www.npmjs.com/package/cookie-parser)
--   [cors](https://www.npmjs.com/package/cors)
--   [dotenv](https://www.npmjs.com/package/dotenv)
--   [express](https://www.npmjs.com/package/express)
--   [js-cookie](https://www.npmjs.com/package/js-cookie)
--   [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
--   [mongoose](https://www.npmjs.com/package/mongoose)
--   [react](https://www.npmjs.com/package/react)
--   [react-router-dom](https://www.npmjs.com/package/react-router-dom)
--   [validator](https://www.npmjs.com/package/validator)
+## Dev Dependencies
+
+-   [flask](https://flask.palletsprojects.com/en/2.3.x/)
+-   [pymysql](https://pypi.org/project/pymysql/)
+-   [flask-bcrypt](https://flask-bcrypt.readthedocs.io/en/1.0.1/)
